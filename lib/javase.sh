@@ -93,6 +93,9 @@ override_dh_shlibdeps:
 
 override_dh_strip_nondeterminism:
 	# Disable dh_strip_nondeterminism to speed up the build
+
+override_dh_strip:
+        # Disable, breaks jmap and other tools - BTS #852342
 EOF
 }
 
@@ -105,6 +108,9 @@ j2se_doc_rules() {
 
 override_dh_strip_nondeterminism:
 	# Disable dh_strip_nondeterminism to speed up the build
+
+override_dh_strip:
+        # Disable, breaks jmap and other tools - BTS #852342
 EOF
 }
 
