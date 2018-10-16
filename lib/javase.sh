@@ -142,18 +142,6 @@ if [ "\$1" = configure ]; then
           fi
         done
     }
-
-    # install_browser_plugin link_path link_name plugin_name plugin
-    install_browser_plugin() {
-        local link_path="\$1"
-        local link_name="\$2"
-        local plugin_name="\$3"
-        local plugin="\$4"
-        [ -d "\$link_path" ] || install -d -m 755 "\$link_path"
-        if [[ -f "\$plugin" ]]; then
-          update-alternatives --install "\$link_path/\$link_name" "\$plugin_name" "\$plugin" ${priority_override:-$j2se_priority}
-        fi
-    }
 EOF
     if [ "$create_cert_softlinks" == "true" ];then
         cat >> "$debian_dir/postinst" << EOF
@@ -192,13 +180,6 @@ case "\$1" in
         for program in \$*; do
           update-alternatives --remove "\$program" "\$program_base/\$program"
         done
-    }
-
-    # remove_browser_plugin plugin_name plugin
-    remove_browser_plugin() {
-        local plugin_name="\$1"
-        local plugin="\$2"
-        update-alternatives --remove "\$plugin_name" "\$plugin"
     }
 
 EOF

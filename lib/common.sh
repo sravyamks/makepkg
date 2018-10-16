@@ -202,15 +202,6 @@ get_architecture() {
     echo "Detected Debian GNU type: ${DEB_BUILD_GNU_TYPE:-N/A}"
 }
 
-# get browser plugin directories
-get_browser_plugin_dirs() {
-    if dpkg-vendor --derives-from Ubuntu; then
-        export browser_plugin_dirs="xulrunner-addons firefox iceape iceweasel mozilla midbrowser xulrunner"
-    else
-        export browser_plugin_dirs=mozilla
-    fi
-}
-
 get_distribution() {
     if [ -n "$distribution" ]; then
       target_distribution="$distribution"

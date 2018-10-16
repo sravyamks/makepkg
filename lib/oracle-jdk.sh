@@ -126,13 +126,6 @@ fi
 install_no_man_alternatives $jvm_base$j2se_name/jre/lib $oracle_jre_lib_hl
 install_alternatives $jvm_base$j2se_name/bin $oracle_bin_jdk
 
-# No plugin for ARM architecture yet
-if [ "${DEB_BUILD_ARCH:0:3}" != "arm" ]; then
-plugin_dir="$jvm_base$j2se_name/jre/lib/$DEB_BUILD_ARCH"
-for b in $browser_plugin_dirs;do
-    install_browser_plugin "/usr/lib/\$b/plugins" "libjavaplugin.so" "\$b-javaplugin.so" "\$plugin_dir/libnpjp2.so"
-done
-fi
 EOF
 }
 
@@ -150,13 +143,6 @@ fi
 remove_alternatives $jvm_base$j2se_name/jre/lib $oracle_jre_lib_hl
 remove_alternatives $jvm_base$j2se_name/bin $oracle_bin_jdk
 
-# No plugin for ARM architecture yet
-if [ "${DEB_BUILD_ARCH:0:3}" != "arm" ]; then
-plugin_dir="$jvm_base$j2se_name/jre/lib/$DEB_BUILD_ARCH"
-for b in $browser_plugin_dirs;do
-    remove_browser_plugin "\$b-javaplugin.so" "\$plugin_dir/libnpjp2.so"
-done
-fi
 EOF
 }
 
@@ -173,17 +159,11 @@ EOF
     fi
     jinfos "hl" $jvm_base$j2se_name/jre/lib/ $oracle_jre_lib_hl
     jinfos "jdk" $jvm_base$j2se_name/bin/ $oracle_bin_jdk
-    if [ "${DEB_BUILD_ARCH:0:3}" != "arm" ]; then
-        for b in $browser_plugin_dirs;do
-            echo "plugin iceweasel-javaplugin.so $jvm_base$j2se_name/jre/lib/$DEB_BUILD_ARCH/libnpjp2.so"
-        done
-    fi
 }
 
 oracle_j2sdk_control() {
     build_depends="libasound2, libgl1-mesa-glx, libgtk2.0-0, libxslt1.1, libxtst6, libxxf86vm1"
     j2se_control
-    java_browser_plugin="java-browser-plugin, "
     depends="\${shlibs:Depends}"
     if [ "${DEB_BUILD_ARCH:0:3}" = "arm" -a "${j2se_arch}" != "arm-vfp-hflt" ]; then
         # ARM is only softfloat ATM so if building on armhf
@@ -191,8 +171,6 @@ oracle_j2sdk_control() {
         if [ "${DEB_BUILD_ARCH}" == "armhf" ]; then
             depends="libc6-armel, libsfgcc1, libsfstdc++6"
         fi
-        # No browser on ARM yet
-        java_browser_plugin=""
     fi
     if [ "$create_cert_softlinks" == "true" ]; then
         depends="$depends, ca-certificates-java"
@@ -208,7 +186,7 @@ Package: $j2se_package
 Architecture: $j2se_debian_arch
 Depends: \${misc:Depends}, java-common, $depends
 Recommends: netbase
-Provides: java-virtual-machine, java-runtime, java2-runtime, $provides_runtime $java_browser_plugin java-compiler, java2-compiler, java-runtime-headless, java2-runtime-headless, $provides_headless java-sdk, java2-sdk, $provides_sdk
+Provides: java-virtual-machine, java-runtime, java2-runtime, $provides_runtime java-compiler, java2-compiler, java-runtime-headless, java2-runtime-headless, $provides_headless java-sdk, java2-sdk, $provides_sdk
 Description: $j2se_title
  The Java(TM) SE JDK is a development environment for building
  applications, applets, and components that can be deployed on the

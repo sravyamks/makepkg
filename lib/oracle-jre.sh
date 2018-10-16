@@ -98,10 +98,6 @@ install_alternatives $jvm_base$j2se_name/bin $oracle_jre_bin_jre
 install_no_man_alternatives $jvm_base$j2se_name/bin $oracle_no_man_jre_bin_jre
 install_no_man_alternatives $jvm_base$j2se_name/lib $oracle_jre_lib_hl
 
-plugin_dir="$jvm_base$j2se_name/lib/$DEB_BUILD_ARCH"
-for b in $browser_plugin_dirs;do
-    install_browser_plugin "/usr/lib/\$b/plugins" "libjavaplugin.so" "\$b-javaplugin.so" "\$plugin_dir/libnpjp2.so"
-done
 EOF
 }
 
@@ -116,10 +112,6 @@ remove_alternatives $jvm_base$j2se_name/bin $oracle_jre_bin_jre
 remove_alternatives $jvm_base$j2se_name/bin $oracle_no_man_jre_bin_jre
 remove_alternatives $jvm_base$j2se_name/lib $oracle_jre_lib_hl
 
-plugin_dir="$jvm_base$j2se_name/lib/$DEB_BUILD_ARCH"
-for b in $browser_plugin_dirs;do
-    remove_browser_plugin "\$b-javaplugin.so" "\$plugin_dir/libnpjp2.so"
-done
 EOF
 }
 
@@ -133,9 +125,6 @@ EOF
     jinfos "jre" $jvm_base$j2se_name/bin/ $oracle_jre_bin_jre
     jinfos "jre" $jvm_base$j2se_name/bin/ $oracle_no_man_jre_bin_jre
     jinfos "hl" $jvm_base$j2se_name/lib/ $oracle_jre_lib_hl
-    for b in $browser_plugin_dirs;do
-        echo "plugin $b-javaplugin.so $jvm_base$j2se_name/lib/$DEB_BUILD_ARCH/libnpjp2.so"
-    done
 }
 
 oracle_j2re_control() {
@@ -153,7 +142,7 @@ Package: $j2se_package
 Architecture: $j2se_debian_arch
 Depends: \${misc:Depends}, \${shlibs:Depends}, java-common, $depends
 Recommends: netbase
-Provides: java-virtual-machine, java-runtime, java2-runtime, $provides_runtime java-runtime-headless, java2-runtime-headless, $provides_headless java-browser-plugin
+Provides: java-virtual-machine, java-runtime, java2-runtime, $provides_runtime java-runtime-headless, java2-runtime-headless, $provides_headless
 Description: $j2se_title
  The Java(TM) SE Runtime Environment contains the Java virtual machine,
  runtime class libraries, and Java application launcher that are
