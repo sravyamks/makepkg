@@ -12,6 +12,9 @@ java-package (0.63) UNRELEASED; urgency=medium
   * Add override_dh_strip to disable striping the binaries.
     Breaks debugging tools like jmap. (Closes: #852342)
 
+  [ Jelmer Vernooĳ ]
+  * Use secure copyright file specification URI.
+
  -- Sven Hoexter <hoexter@debian.org>  Mon, 22 Oct 2018 15:39:32 +0200
 
 java-package (0.62) unstable; urgency=medium
