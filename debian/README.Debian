@@ -18,6 +18,8 @@ Supported java binary distributions currently include:
     - The J2SE Development Kit (JDK), version 6, 7 and 8
     - The J2SE Runtime Environment (JRE), version 6, 7 and 8
     - The J2SE API Javadoc, version 6, 7 and 8
+   * AdoptOpenJDK (https://adoptopenjdk.net)
+    - The Java Development Kit (JDK), version 8 and 11
   (Choose tar.gz archives or self-extracting archives, do _not_ choose the RPM!)
 
 All other previously supported jvm (Blackdown, IBM, ..) have been removed and
